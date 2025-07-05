@@ -1,4 +1,4 @@
- Rooming List Management App
+Rooming List Management App
 
 The **Rooming List Management App** is a full-stack application designed to help event planners and hotels manage rooming lists and bookings for events efficiently. It provides functionality to create, import, and associate bookings with specific rooming lists, as well as view and filter them using an intuitive user interface.
 
@@ -38,9 +38,15 @@ Rooming-List-Management-App/
 ├── docker-compose.yml # Docker orchestration
 └── README.md
 
----
-
 ## 🛠️ Running the Project
+
+The first thing we have to do is install the node_modules: we start with server, move to the server file, cd server.
+Luis@MacBook-Pro-5 server %
+inside the server directory, use the yarn install or npm install command. This will create the node_modules folder with all the necessary packages for the server to work.
+
+Now go to the client directory. From the project root, move to the client directory, open a new terminal, and type cd client.
+Luis@MacBook-Pro-5 client %
+Inside the directory, use the yarn install or npm install command to download the node_modules directory.
 
 ### ✅ Prerequisites
 
@@ -83,6 +89,7 @@ A. 🐘 Start PostgreSQL locally
 Ensure PostgreSQL is installed and running on your machine(I used pgAdmin 4 as a tool to work with PostgreSQL and it was quite easy to use.).
 Create a database: CREATE DATABASE "RoomingListManagementApp";
 Run the init.sql manually or via CLI: psql -U postgres -d RoomingListManagementApp -f scripts/init.sql
+
 B. 🔧 Configure .env File
 Create a .env file in the server/ folder with the following variables:
 PORT=3001
@@ -92,6 +99,7 @@ PGUSER=postgres
 PGPASSWORD=your_db_password
 PGDATABASE=RoomingListManagementApp
 PGPORT=5432
+
 C. 🚀 Start the Backend Server
 In the server/ directory: nodemon index
 D. 🎨 Start the Frontend
@@ -116,3 +124,4 @@ Feel free to fork the repo, improve it, and open a pull request!
 This project is licensed under the MIT License.
 🌐 Author
 Luis Smith – LinkedIn – GitHub
+```
