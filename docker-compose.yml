@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15.3
+    container_name: postgres_rooming
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./server
+    container_name: rooming_backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres-db
+    environment:
+      DB_HOST: postgres-db
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+      DB_PORT: 5432
+    volumes:
+      - ./server:/app
+    # command: nodemon index
+
+  frontend:
+    build: ./client
+    container_name: rooming_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./client:/app
+    command: npm run dev
+
+volumes:
+  pgdata:
+
+

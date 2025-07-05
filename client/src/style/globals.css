@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+.bg-eventId-1 {
+  background-color: #e5f9f6;
+  color: #00c2a6;
+}
+
+.bg-eventId-2 {
+  background-color: #f3efff;
+  color: #8438ff;
+}
+
+.btnFilter {
+  border-radius: 8px;
+  border: 1px solid #e4ecf2;
+  background: #fff;
+  color: #141416;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.btn-color-green {
+  color: #00c2a6;
+}
+
+.btn-color-red {
+  color: #ef4444;
+}

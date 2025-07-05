@@ -1,0 +1,63 @@
+import { create } from 'zustand';
+import { RoomingList } from '@/interfaces/rooming-list-res';
+
+interface RoomingListState {
+  allRoomingLists: RoomingList[];
+  filteredList: RoomingList[];
+  setFilteredList: (list: RoomingList[]) => void;
+  clearFilteredList: () => void;
+  setAllRoomingLists: (list: RoomingList[]) => void;
+  sortByCutOffDate: (order: 'asc' | 'desc') => void;
+}
+
+interface Booking {
+  guest_name: string;
+  check_in_date: string;
+  check_out_date: string;
+}
+
+interface RoomingWithBookings {
+  rooming_list_id: number;
+  rfp_name: string;
+  bookings: Booking[];
+}
+
+interface RoomingWithBookingsState {
+  roomingListWithBookings: RoomingWithBookings[];
+  setRoomingListWithBookings: (data: RoomingWithBookings[]) => void;
+  clearRoomingListWithBookings: () => void;
+}
+
+export const useRoomingListState = create<RoomingListState>((set, get) => ({
+ allRoomingLists: [],
+  filteredList: [],
+
+  setFilteredList: (list) => set({ filteredList: list }),
+  clearFilteredList: () => set({ filteredList: [] }),
+  setAllRoomingLists: (list) => set({ allRoomingLists: list }),
+
+  sortByCutOffDate: (order) => {
+  const state = get();
+  const source =
+    state.filteredList.length > 0 ? state.filteredList : state.allRoomingLists;
+
+  const sorted = [...source].sort((a, b) => {
+    const dateA = new Date(a.cut_off_date).getTime();
+    const dateB = new Date(b.cut_off_date).getTime();
+    return order === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+
+  if (state.filteredList.length > 0) {
+    set({ filteredList: sorted });
+  } else {
+    set({ allRoomingLists: sorted });
+  }
+}
+
+}));
+
+export const useRoomingWithBookingsState = create<RoomingWithBookingsState>((set) => ({
+  roomingListWithBookings: [],
+  setRoomingListWithBookings: (data) => set({ roomingListWithBookings: data }),
+  clearRoomingListWithBookings: () => set({ roomingListWithBookings: [] }),
+}));

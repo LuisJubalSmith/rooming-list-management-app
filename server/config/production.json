@@ -1,0 +1,11 @@
+{
+  "jwtSecret": "starWars",
+   "jwtExpiresIn": "1h",
+  "db": {
+    "host": "postgres-db",
+    "port": 5432,
+    "user": "postgres",
+    "password": "Ljs13246102",
+    "database": "RoomingListManagementApp"
+  }
+}
