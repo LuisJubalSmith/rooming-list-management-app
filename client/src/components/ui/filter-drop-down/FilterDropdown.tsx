@@ -68,7 +68,7 @@ export const FilterDropdown = () => {
 
       {/* Button to confirm and apply the selected filter */}
       <button
-        onClick={handleSave}
+        onClick={() => handleSave()}
         className='mt-4 w-full bg-[#552bff] text-white py-2 rounded-md font-semibold hover:bg-[#4620e0] transition'
       >
         Save

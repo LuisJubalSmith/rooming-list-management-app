@@ -134,7 +134,7 @@ const Home = () => {
                   items-center 
                   justify-center 
                   gap-2'
-                onClick={handleImport}
+                onClick={() => handleImport()}
                 disabled={importing}
               >
                 {importing && (
@@ -167,7 +167,7 @@ const Home = () => {
               <div className='flex'>
                 <button
                   className='flex items-center gap-2 px-4 py-2 btnFilter font-semibold btn-color-red rounded transition w-full sm:w-[115px] justify-center'
-                  onClick={handleClearTabla}
+                  onClick={() => handleClearTabla()}
                   disabled={clearing}
                 >
                   {clearing && (

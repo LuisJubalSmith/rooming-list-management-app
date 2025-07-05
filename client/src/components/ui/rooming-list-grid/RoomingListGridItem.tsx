@@ -109,7 +109,7 @@ export const RoomingListCard = ({ item }: Props) => {
 
         <div className='flex mt-2 space-y-2 justify-between'>
           <button
-            onClick={handleViewBookings}
+            onClick={() => handleViewBookings()}
             className='
               bg-[#4D2CFF] 
               hover:bg-[#3c21d6] 

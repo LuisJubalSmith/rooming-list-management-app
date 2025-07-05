@@ -100,7 +100,7 @@ export const Search = () => {
             className='
           flex items-center gap-2 px-4 py-3 btnFilter font-semibold rounded transition w-full sm:w-[115px] justify-center
         '
-            onClick={toggleFilter}
+            onClick={() => toggleFilter()}
           >
             Filters
             <svg
@@ -181,7 +181,7 @@ export const Search = () => {
 
         <button
           className='text-sm text-red-600 underline hover:text-red-800 transition'
-          onClick={handleClearAll}
+          onClick={() => handleClearAll()}
         >
           Clear Filters
         </button>
