@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import {
   getBookingsByRoomingListId,
@@ -16,20 +15,27 @@ interface Props {
 }
 
 export const RoomingListCard = ({ item }: Props) => {
+  // State to track which RoomingList ID's booking form is currently active (open)
   const [activeFormId, setActiveFormId] = useState<number | null>(null);
+
+  // Fetches updated rooming lists with their booking counts from backend,
+  // updates the Zustand store and hides the booking form.
   const fetchRoomingListWithBookings = async () => {
-    const data = await getRoomingListWithBookingsCount(); // tu endpoint `/bookings-for-rooming`
+    const data = await getRoomingListWithBookingsCount();
     useRoomingWithBookingsState.getState().setRoomingListWithBookings(data);
     setActiveFormId(null);
   };
-
+  // Get booking counts for all rooming lists from Zustand store
   const bookingsData = useRoomingWithBookingsState(
     (state) => state.roomingListWithBookings
   );
+  // Find booking count for this specific rooming list, defaulting to 0
   const bookingCount =
     bookingsData.find((rb) => rb.rooming_list_id === item.rooming_list_id)
       ?.bookings.length || 0;
 
+  // Fetches bookings for this specific rooming list and logs them to console.
+  // This is triggered by the 'View Bookings' button.
   const handleViewBookings = async () => {
     const bookings = await getBookingsByRoomingListId(item.rooming_list_id);
     console.log(
@@ -38,16 +44,18 @@ export const RoomingListCard = ({ item }: Props) => {
     );
   };
 
+  // Parse cut off date to display month and day in UI
   const cutOffDate = new Date(item.cut_off_date);
-
   const month = cutOffDate
     .toLocaleString('en-US', { month: 'short' })
     .toUpperCase();
   const day = cutOffDate.getDate();
 
+  // Current date and cut off date as localized strings for display
   const today = new Date().toLocaleDateString();
   const checkOut = new Date(item.cut_off_date).toLocaleDateString();
 
+  // Determine if booking form for this card is currently visible
   const isFormVisible = activeFormId === item.rooming_list_id;
 
   return (
@@ -76,6 +84,7 @@ export const RoomingListCard = ({ item }: Props) => {
           <span className='font-semibold'>{item.agreement_type}</span>
         </p>
 
+        {/* Cut-off date displayed top-right with month and day */}
         <div className='absolute flex justify-end right-4 top-0'>
           <div className='text-center'>
             <div className='bg-blue-100 text-blue-600 text-xs font-bold rounded-t px-2 py-1'>
@@ -90,6 +99,7 @@ export const RoomingListCard = ({ item }: Props) => {
           </div>
         </div>
 
+        {/* Display today's date and the cut-off date with calendar icons */}
         <div className='flex items-center text-sm text-gray-500 gap-2'>
           <FaRegCalendarAlt className='text-gray-400' />
           <span>{today}</span>
@@ -152,6 +162,7 @@ export const RoomingListCard = ({ item }: Props) => {
 
         {/* Modal-like BookingForm */}
       </div>
+      {/* Conditional rendering of the BookingForm modal */}
       {isFormVisible && (
         <div className='absolute top-8 right-4 w-[400px] bg-white bg-opacity-95 backdrop-blur-md rounded-2xl z-50 p-4 shadow-lg'>
           <BookingForm

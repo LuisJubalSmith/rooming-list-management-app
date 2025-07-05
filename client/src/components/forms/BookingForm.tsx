@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const BookingForm = ({ roomingListId, onCreated }: Props) => {
+  // Local state to manage the form inputs
   const [form, setForm] = useState({
     hotel_id: 1,
     event_id: 1,
@@ -19,12 +20,16 @@ export const BookingForm = ({ roomingListId, onCreated }: Props) => {
   });
   const { guest_name, guest_phone_number, check_in_date, check_out_date } =
     form;
+
+  // Handles form input changes and updates the corresponding state.
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
+  //Submits the form to create a new booking for the specified rooming list.
+  //Displays a success or error toast notification and calls onCreated callback.
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {

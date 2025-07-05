@@ -9,8 +9,11 @@ interface Props {
 }
 
 export const RoomingForm = ({ onCreated }: Props) => {
+  // Toggles the visibility of the form
   const toggleForm = useRoomingFormStore((state) => state.toggleForm);
+  // Generates a unique rooming list ID based on the current timestamp
   const generateRoomingListId = Date.now();
+  // State for holding the form data
   const [form, setForm] = useState({
     rooming_list_id: generateRoomingListId,
     event_id: 1,
@@ -21,12 +24,16 @@ export const RoomingForm = ({ onCreated }: Props) => {
     agreement_type: 'leisure',
   });
 
+  //Handles changes to input and select fields,
+  //updating the form state accordingly.
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Submits the form to create a new Rooming List.
+  // If successful, notifies the user and resets the form state.
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
