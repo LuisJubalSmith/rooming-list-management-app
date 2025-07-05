@@ -24,12 +24,20 @@ const Home = () => {
   );
   const isRoomingFormVisible = useRoomingFormStore((state) => state.isVisible);
 
+  /**
+   * Fetches all rooming list data and their associated booking counts.
+   * Updates both local state and Zustand store for rooming lists and bookings.
+   */
   const fetchData = async () => {
     setLoading(true);
     try {
       const data = await getAllRoomingList();
       setDataFetchAll(data);
       setAllRoomingLists(data);
+      const bookingsData = await getRoomingListWithBookingsCount();
+      useRoomingWithBookingsState
+        .getState()
+        .setRoomingListWithBookings(bookingsData);
     } catch (error) {
       console.error('Error fetching rooming list:', error);
       toast.error('Error al obtener datos');
@@ -38,16 +46,17 @@ const Home = () => {
     }
   };
 
-  const fetchRoomingListWithBookings = async () => {
-    const data = await getRoomingListWithBookingsCount();
-    useRoomingWithBookingsState.getState().setRoomingListWithBookings(data);
-  };
-
+  /**
+   * Ensures the initial data is loaded when the component mounts.
+   */
   useEffect(() => {
     fetchData();
-    fetchRoomingListWithBookings();
   }, []);
 
+  /**
+   * Imports sample rooming and booking data into the backend.
+   * Then refreshes the frontend state by re-fetching the data.
+   */
   const handleImport = async () => {
     setImporting(true);
     try {
@@ -62,6 +71,10 @@ const Home = () => {
     }
   };
 
+  /**
+   * Clears all data from the backend tables.
+   * Then refreshes the frontend state to reflect the empty state.
+   */
   const handleClearTabla = async () => {
     const confirm = window.confirm('Are you sure you want to delete all data?');
     if (!confirm) return;
@@ -79,6 +92,10 @@ const Home = () => {
     }
   };
 
+  /**
+   * Callback triggered after successfully creating a new Rooming List.
+   * It refetches all data to reflect the latest state in the UI.
+   */
   const onCreated = () => {
     fetchData();
   };

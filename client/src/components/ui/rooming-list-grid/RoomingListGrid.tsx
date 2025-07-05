@@ -1,3 +1,4 @@
+'use client';
 import { RoomingList } from '@/interfaces/rooming-list-res';
 import { RoomingListCard } from '@/components';
 
@@ -7,11 +8,13 @@ interface Props {
 }
 
 export const RoomingListGrid = ({ roomingList, loading }: Props) => {
+  // Validate that the passed prop is an array to avoid runtime errors
   if (!Array.isArray(roomingList)) {
     console.error('roomingList is not an array:', roomingList);
     return <div>Error al cargar datos.</div>;
   }
 
+  // Separate rooming lists into two groups based on event_id (for different event sections)
   const firstRow = roomingList.filter((item) => item.event_id === 1);
   const secondRow = roomingList.filter((item) => item.event_id === 2);
 
@@ -48,7 +51,7 @@ export const RoomingListGrid = ({ roomingList, loading }: Props) => {
                 />
               </div>
 
-              {/* Card container */}
+              {/* Container holding the list of RoomingListCards */}
               <div
                 className='
                   flex sm:flex-row flex-col
@@ -58,6 +61,7 @@ export const RoomingListGrid = ({ roomingList, loading }: Props) => {
                   transition-all duration-300 ease-in-out
                 '
               >
+                {/* Render each rooming list as a RoomingListCard */}
                 {items.map((item) => (
                   <RoomingListCard key={item.rooming_list_id} item={item} />
                 ))}

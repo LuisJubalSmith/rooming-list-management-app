@@ -5,7 +5,8 @@ const router = express.Router();
 const { pool } = require('../config/db');
 const auth = require('../middleware/auth');
 
-// Get all rooming lists
+// GET /api/rooming-lists
+// Get all rooming lists (protected route)
 router.get('/', auth, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM rooming_lists');
@@ -16,7 +17,8 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// Create new rooming list
+// POST /api/rooming-lists/create
+// Create a new rooming list (protected route)
 router.post('/create', auth, async (req, res) => {
   const {
     rooming_list_id,
@@ -44,7 +46,8 @@ router.post('/create', auth, async (req, res) => {
   }
 });
 
-//Modify one rooming list by id
+// PUT /api/rooming-lists/:id
+// Modify one rooming list by ID (protected route)
 router.put('/:id', auth, async (req, res) => {
   const { id } = req.params;
   const {
@@ -81,7 +84,8 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-//Delete one rooming list by id
+// DELETE /api/rooming-lists/:id
+// Delete one rooming list by ID (protected route)
 router.delete('/:id', auth, async (req, res) => {
   const { id } = req.params;
 
@@ -102,7 +106,8 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-// Get filter by eventId, rfpName, agreementType
+// GET /api/rooming-lists/search-bar?q=
+// Search rooming lists by eventId, rfpName, agreementType, or status (protected route)
 router.get('/search-bar', auth, async (req, res) => {
   const { q } = req.query;
 
@@ -142,7 +147,8 @@ router.get('/search-bar', auth, async (req, res) => {
   }
 });
 
-// Get rooming list by rfpStatus
+// GET /api/rooming-lists/status?status=
+// Filter rooming lists by status (no auth required)
 router.get('/status', async (req, res) => {
   const { status } = req.query;
 
@@ -183,7 +189,8 @@ router.get('/status', async (req, res) => {
   }
 });
 
-// Get by date
+// GET /api/rooming-lists/sorted?order=asc|desc
+// Get rooming lists sorted by cut_off_date (protected route)
 router.get('/sorted', auth, async (req, res) => {
   const { order } = req.query;
   const sortOrder = order === 'desc' ? 'DESC' : 'ASC';

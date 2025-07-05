@@ -3,25 +3,24 @@
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
-const config = require('config');
 const path = require('path');
 const connectDB = require('./config/db');
 require('dotenv').config();
 
 const app = express();
 const httpServer = http.createServer(app);
-// Conectar a DB
+// Connect DB
 connectDB();
 
 // Middleware global
 app.use(cors());
 app.use(express.json());
 
-// Servir archivos statict (opcional)
+// Servir statict file (opcional)
 app.use(express.static(path.join(__dirname, 'public')));
-// Ruta base
+// base Route
 app.get('/', (req, res) => res.send('API Running'));
-// Rutas de API
+//API Route
 app.use('/api/rooming-lists', require('./routes/rooming-list-route'));
 app.use('/api/rooming-lists/create', require('./routes/rooming-list-route'));
 app.use('/api/rooming-list-bookings', require('./routes/rooming-list-bookings'));

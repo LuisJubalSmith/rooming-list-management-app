@@ -1,23 +1,33 @@
 'use client';
 import React, { ChangeEvent, useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
-import { RiEqualizerLine } from 'react-icons/ri';
 
 import { useRoomingListState, useUiStore } from '../../../store';
 import { FilterDropdown } from '@/components';
 import { getDataBySearch } from '@/actions';
 
 export const Search = () => {
+  // Zustand store function to toggle filters dropdown visibility
   const toggleFilter = useUiStore((state) => state.toggleFilter);
+  // Zustand store state to check if filter dropdown is open
   const isFilterOpen = useUiStore((state) => state.isFilterOpen);
+  // Local state to hold the search input value
   const [search, setSearch] = useState('');
+  // Zustand store function to update filtered rooming list data
   const setFilteredList = useRoomingListState((state) => state.setFilteredList);
-
+  // Zustand store action to sort rooming lists by cut-off date
   const sortByCutOffDate = useRoomingListState(
     (state) => state.sortByCutOffDate
   );
-
+  // Local state to track sort order (ascending or descending)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  /**
+   * Handle changes in the search input field.
+   * Calls backend to get filtered rooming lists by search term,
+   * updates Zustand store with results.
+   * If input is empty, clears filtered list.
+   */
   const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
@@ -35,11 +45,18 @@ export const Search = () => {
       console.error('Error buscando:', error);
     }
   };
+  /**
+   * Handles the change of sorting order (asc/desc) from the dropdown.
+   * Calls Zustand action to sort the list accordingly.
+   */
   const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as 'asc' | 'desc';
     setSortOrder(value);
     sortByCutOffDate(value);
   };
+  /**
+   * Clears search input and resets the filtered rooming list.
+   */
   const handleClearAll = () => {
     setSearch('');
     useRoomingListState.getState().clearFilteredList();

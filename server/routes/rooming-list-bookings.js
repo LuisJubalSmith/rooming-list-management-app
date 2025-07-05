@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../config/db');
 
-// Get all rooming list bookings
+// GET /api/rooming-list-bookings
+// Fetches all entries from the rooming_list_bookings table
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM rooming_list_bookings');

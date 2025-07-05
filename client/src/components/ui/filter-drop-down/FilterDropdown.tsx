@@ -1,27 +1,34 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useUiStore, useRoomingListState } from '../../../store';
 import { getDataByStatus } from '@/actions';
 
 export const FilterDropdown = () => {
+  // Closes the filter panel using the global Zustand UI state
   const closeFilter = useUiStore((state) => state.closeFilter);
+  // Sets the filtered rooming list in the Zustand global state
   const setFilteredList = useRoomingListState((state) => state.setFilteredList);
+  // Clears any active filters from Zustand state
   const clearFilteredList = useRoomingListState(
     (state) => state.clearFilteredList
   );
 
+  // Local state to track the selected filter status
   const [selectedStatus, setSelectedStatus] = useState<string>('closed');
 
+  // Clear existing filters when the component mounts
   useEffect(() => {
     clearFilteredList();
   }, [clearFilteredList]);
 
+  // Handle ratio input changes by updating the selected status.
   const handleCheckboxChange = (value: string) => {
     setSelectedStatus(value);
   };
 
+  // Fetches filtered rooming list data based on the selected status.
+  // Updates Zustand store with the filtered list and closes the filter panel.
   const handleSave = async () => {
     try {
       const data = await getDataByStatus(selectedStatus);
@@ -59,6 +66,7 @@ export const FilterDropdown = () => {
         ))}
       </div>
 
+      {/* Button to confirm and apply the selected filter */}
       <button
         onClick={handleSave}
         className='mt-4 w-full bg-[#552bff] text-white py-2 rounded-md font-semibold hover:bg-[#4620e0] transition'

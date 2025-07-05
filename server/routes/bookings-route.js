@@ -4,7 +4,11 @@ const router = express.Router();
 const { pool } = require('../config/db');
 const auth = require('../middleware/auth');
 
-// Get all bookings
+/**
+ * @route   GET /api/bookings
+ * @desc    Get all bookings (no auth required)
+ * @access  Public
+ */
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM bookings');
@@ -15,7 +19,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get bookings for each rooming list
+/**
+ * @route   GET /api/bookings/bookings-for-rooming
+ * @desc    Get bookings grouped by Rooming List
+ * @access  Public
+ */
 router.get('/bookings-for-rooming', async (req, res) => {
   try {
     const result = await pool.query(`
@@ -31,7 +39,7 @@ router.get('/bookings-for-rooming', async (req, res) => {
       ORDER BY rl.rooming_list_id, b.check_in_date;
     `);
 
-    // Agrupar resultados por rooming_list_id
+    // Group bookings by rooming_list_id
     const grouped = {};
 
     result.rows.forEach(row => {
@@ -62,7 +70,11 @@ router.get('/bookings-for-rooming', async (req, res) => {
   }
 });
 
-// Get bookings from a specific RoomingList
+/**
+ * @route   GET /api/bookings/:id/bookings-by-id
+ * @desc    Get bookings for a specific Rooming List
+ * @access  Private (requires token)
+ */
 router.get('/:id/bookings-by-id', auth, async (req, res) => {
   const { id } = req.params;
   const roomingListId = parseInt(id, 10);
@@ -88,7 +100,11 @@ router.get('/:id/bookings-by-id', auth, async (req, res) => {
   }
 });
 
-// Create an individual booking and associate it with a rooming list
+/**
+ * @route   POST /api/bookings/:rooming_list_id/create
+ * @desc    Create a new booking and associate it with a Rooming List
+ * @access  Private (requires token)
+ */
 router.post('/:rooming_list_id/create', auth, async (req, res) => {
   const { rooming_list_id } = req.params;
 
@@ -105,6 +121,7 @@ router.post('/:rooming_list_id/create', auth, async (req, res) => {
   } = req.body;
 
   try {
+    // 1. Insert the booking
     const bookingResult = await pool.query(
       `INSERT INTO bookings (
         hotel_id, event_id, guest_name, guest_phone_number,
@@ -122,6 +139,7 @@ router.post('/:rooming_list_id/create', auth, async (req, res) => {
 
     const bookingId = bookingResult.rows[0].booking_id;
 
+    // 2. Associate it with the rooming list
     await pool.query(
       `INSERT INTO rooming_list_bookings (rooming_list_id, booking_id)
        VALUES ($1, $2)`,

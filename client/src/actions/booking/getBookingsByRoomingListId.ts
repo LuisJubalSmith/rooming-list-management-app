@@ -1,5 +1,10 @@
 import { sendRequest } from "../api";
 
+/**
+ * Fetches all bookings associated with a specific rooming list ID.
+ * Returns an array of bookings or an empty array if an error occurs.
+ * @param id - Rooming List ID to fetch bookings for
+ */
 export const getBookingsByRoomingListId = async (id: number) => {
   try {
     const data = await sendRequest(
@@ -14,11 +19,15 @@ export const getBookingsByRoomingListId = async (id: number) => {
       return [];
     }
   } catch (error) {
-    console.error("❌ Failed to fetch bookings:", error);
+    console.error("Failed to fetch bookings:", error);
     return [];
   }
 };
-
+/**
+ * Fetches all rooming lists along with their associated bookings count.
+ * Each item in the returned array contains a `bookings` array.
+ * Returns an array or empty array if an error occurs.
+ */
 export const getRoomingListWithBookingsCount = async () => {
   try {
     const data = await sendRequest(
@@ -33,11 +42,18 @@ export const getRoomingListWithBookingsCount = async () => {
       return [];
     }
   } catch (error) {
-    console.error("❌ Failed to fetch rooming lists with bookings:", error);
+    console.error("Failed to fetch rooming lists with bookings:", error);
     return [];
   }
 };
 
+/**
+ * Creates a new booking linked to the specified rooming list ID.
+ * Sends booking data in the request body.
+ * Throws an error if the request fails.
+ * @param rooming_list_id - The ID of the rooming list to associate the booking with
+ * @param bookingData - Booking details to create
+ */
 export const createBooking = async (
   rooming_list_id: number,
   bookingData: {
@@ -57,7 +73,7 @@ export const createBooking = async (
     );
     return data;
   } catch (error) {
-    console.error('❌ Error al crear booking:', error);
+    console.error('Error al crear booking:', error);
     throw error;
   }
 };
