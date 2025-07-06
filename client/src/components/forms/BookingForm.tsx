@@ -63,20 +63,26 @@ export const BookingForm = ({ roomingListId, onCreated }: Props) => {
           placeholder='Phone number'
           className='w-full border p-2 rounded'
         />
-        <input
-          type='date'
-          name='check_in_date'
-          value={check_in_date}
-          onChange={handleInputChange}
-          className='w-full border p-2 rounded'
-        />
-        <input
-          type='date'
-          name='check_out_date'
-          value={check_out_date}
-          onChange={handleInputChange}
-          className='w-full border p-2 rounded'
-        />
+        <div>
+          <span>Check in</span>
+          <input
+            type='date'
+            name='check_in_date'
+            value={check_in_date}
+            onChange={handleInputChange}
+            className='w-full border p-2 rounded'
+          />
+        </div>
+        <div>
+          <span>Check out</span>
+          <input
+            type='date'
+            name='check_out_date'
+            value={check_out_date}
+            onChange={handleInputChange}
+            className='w-full border p-2 rounded'
+          />
+        </div>
         <button
           type='submit'
           className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'

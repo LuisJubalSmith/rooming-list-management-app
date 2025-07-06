@@ -7,7 +7,7 @@ import { sendRequest } from "../api";
  */
 export const insertAllData =async()=>{
     try {
-        const response = await sendRequest("http://localhost:3001/api/import/data","POST")
+        const response = await sendRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/import/data`,"POST")
         // Assuming the backend sends { ok: true } or similar in response
         if (response.ok) {
             return await response
@@ -27,7 +27,7 @@ export const insertAllData =async()=>{
  */
 export const clearTabla =async()=>{
     try {
-       const response = await sendRequest("http://localhost:3001/api/import/clear","DELETE")
+       const response = await sendRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/import/clear`,"DELETE")
        if (response.ok) {
             return await response
         } else {

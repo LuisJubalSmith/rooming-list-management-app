@@ -53,6 +53,7 @@ export const RoomingForm = ({ onCreated }: Props) => {
     >
       <h2 className='text-lg font-semibold mb-4'>Crear Rooming List</h2>
       <div className='grid grid-cols-1 gap-4'>
+        <span>Event Id</span>
         <input
           type='number'
           name='event_id'
@@ -62,6 +63,7 @@ export const RoomingForm = ({ onCreated }: Props) => {
           className='border px-3 py-2 rounded'
           required
         />
+        <span>Hotel Id</span>
         <input
           type='number'
           name='hotel_id'
