@@ -67,7 +67,7 @@ export const createBooking = async (
 ) => {
   try {
     const data = await sendRequest(
-      `http://localhost:3001/api/bookings/${rooming_list_id}/create`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}api/bookings/${rooming_list_id}/create`,
       'POST',
       bookingData
     );

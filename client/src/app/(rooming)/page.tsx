@@ -190,7 +190,7 @@ const Home = () => {
                       ></path>
                     </svg>
                   )}
-                  {clearing ? 'erase...' : 'Clear Tabla'}
+                  {clearing ? 'Erasing...' : 'Delete tables'}
                 </button>
                 <button
                   className='flex ml-4 items-center gap-2 px-4 py-2 btnFilter font-semibold btn-color-green rounded transition w-full sm:w-[115px] justify-center'

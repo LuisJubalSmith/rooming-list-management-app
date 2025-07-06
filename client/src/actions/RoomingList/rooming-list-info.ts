@@ -6,7 +6,7 @@ import { sendRequest } from "../api";
  */
 export const getAllRoomingList = async () => {
   try {
-    const data = await sendRequest("http://localhost:3001/api/rooming-lists", "GET");
+    const data = await sendRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/rooming-lists`, "GET");
     if (Array.isArray(data)) {
       return data;
     } else {
@@ -26,7 +26,7 @@ export const getAllRoomingList = async () => {
  */
 export const getDataBySearch = async (value: string) => {
   try {
-    const data = await sendRequest(`http://localhost:3001/api/rooming-lists/search-bar?q=${value}`, "GET");
+    const data = await sendRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/rooming-lists/search-bar?q=${value}`, "GET");
     if (Array.isArray(data)) {
       return data;
     } else {
@@ -46,7 +46,7 @@ export const getDataBySearch = async (value: string) => {
  */
 export const getDataByStatus = async (value: string) =>{
   try {
-    const data = await sendRequest(`http://localhost:3001/api/rooming-lists/status?status=${value}`, "GET");
+    const data = await sendRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/rooming-lists/status?status=${value}`, "GET");
     if (Array.isArray(data)) {
       return data;
     } else {
@@ -75,7 +75,7 @@ export const createRoomingList = async (payload: {
 }) => {
   try {
     const data = await sendRequest(
-      'http://localhost:3001/api/rooming-lists/create',
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}api/rooming-lists/create`,
       'POST',
       payload
     );

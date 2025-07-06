@@ -42,6 +42,14 @@ Rooming-List-Management-App/
 
 ## 🛠️ Running the Project
 
+The first thing we have to do is install the node_modules: we start with server, move to the server file, cd server.
+Luis@MacBook-Pro-5 server %
+inside the server directory, use the yarn install or npm install command. This will create the node_modules folder with all the necessary packages for the server to work.
+
+Now go to the client directory. From the project root, move to the client directory, open a new terminal, and type cd client.
+Luis@MacBook-Pro-5 client %
+Inside the directory, use the yarn install or npm install command to download the node_modules directory.
+
 ### ✅ Prerequisites
 
 - [Node.js](https://nodejs.org/)

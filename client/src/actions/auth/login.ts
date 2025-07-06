@@ -10,21 +10,21 @@ export const login = async () => {
     try {
 
         // Send POST request to login endpoint with username and password
-        const response = await sendRequest("http://localhost:3001/api/auth/login", "POST", {
+        const response = await sendRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/auth/login`, "POST", {
             username: "admin",
             password: "123456"
          });
-         console.log("Response del login:", response);
+         console.log("Login response:", response);
 
         // If the response contains a token, save it in localStorage for auth
         if (response.token) {
             localStorage.setItem("token", response.token);
-            console.log("Token almacenado en localStorage");
+            console.log("Token stored in localStorage");
         }else{
-            console.error("Falló el login:", response);
+            console.error("Login failed:", response);
         } 
         
     } catch (error) {
-        console.error("Error al hacer login de desarrollo:", error);
+        console.error("Error when logging in to development:", error);
     }
 };
